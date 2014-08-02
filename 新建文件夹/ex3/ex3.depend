@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1406026310 source:e:\c&c++\cpp2014\homework\新建文件夹\ex3\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"StreamBuffer.cpp"
+
+1406026790 e:\c&c++\cpp2014\homework\新建文件夹\ex3\streambuffer.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"StreamBuffer.h"
+
+1406026289 e:\c&c++\cpp2014\homework\新建文件夹\ex3\streambuffer.h
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
