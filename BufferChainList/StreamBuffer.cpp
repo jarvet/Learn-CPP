@@ -3,8 +3,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fstream>
 
-#define BUFFER_LEN 262144 // 256kB
 
 using namespace std;
 
@@ -121,6 +121,11 @@ void StreamBuffer::r_CleanUp(Record *start)
 	}
 }
 
+Record* StreamBuffer::r_GetHead()
+{
+	return head;
+}
+
 void StreamBuffer::ReceiveDate(unsigned int offset, unsigned int bytes, char *pData)
 {
 	if (NULL == head)
@@ -138,6 +143,9 @@ void StreamBuffer::ReceiveDate(unsigned int offset, unsigned int bytes, char *pD
 	}
 	if (m_iBufferLen > 0.8 * BUFFER_LEN)
 	{
+		ofstream errlog("err.log");
+		errlog << head_offset << " to " << head->get_next()->get_left() << " was lost!" << endl;
+		errlog.close();
 		int move = head->get_next()->get_left();
 		head_offset += move;
 		m_iBufferLen -= (head->get_right() - head->get_left() + 1);
@@ -187,11 +195,18 @@ int StreamBuffer::RemoveData(int iBytes)
 	}
 	return iBytesRemoved;
 }
+
+unsigned int StreamBuffer::GetHeadOffset()
+{
+	return head_offset;
+}
 //正能量接口来了= =b
 int StreamBuffer::CleanDate(unsigned int &iDataoffset, char* &pData)
 {
 	//用户可以通过循环调用此接口将缓存区中所有数据取走
 	//与continueBytes的区别为去除第一块不完整数据
+	ofstream errlog("err.log");
+	errlog << head_offset << " to " << head->get_next()->get_next() << " was lost!" << endl;
 	int iContinueBytes = 0;
 	int move = head->get_next()->get_left();
 	head_offset += move;
